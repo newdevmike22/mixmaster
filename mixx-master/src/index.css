@@ -24,6 +24,8 @@ html {
   --primary-800: #065f46;
   --primary-900: #064e3b;
   --primary-1000: #4e1bc4;
+  --primary-1100: #400b80;
+  --primary-1200: #7009ed;
 
   /* grey */
   --grey-50: #f8fafc;
@@ -159,7 +161,7 @@ ul {
 .btn {
   cursor: pointer;
   color: var(--white);
-  background: var(--primary-500);
+  background: var(--primary-1100);
   border: transparent;
   border-radius: var(--borderRadius);
   letter-spacing: var(--letterSpacing);
@@ -170,7 +172,7 @@ ul {
   display: inline-block;
 }
 .btn:hover {
-  background: var(--primary-700);
+  background: var(--primary-1200);
   box-shadow: var(--shadow-3);
 }
 .btn-hipster {
