@@ -1,6 +1,31 @@
+import { Form, redirect, useNavigation } from "react-router-dom";
+import axios from "axios";
+import { toast } from 'react-toastify';
+
+const newsletterUrl = 'https://www.course-api.com/cocktails-newsletter';
+
+export const action = async ({ request }) => {
+    const formData = await request.formData();
+    const data = Object.fromEntries(formData);
+
+    try {
+        const response = await axios.post(newsletterUrl, data);
+
+        toast.success(response.data.msg);
+        return redirect('/');
+    } catch (error) {
+        console.log(error); 
+        toast.error(error?.response?.data?.msg); 
+        return error;      
+    }
+};
+
 const Newsletter = () => {
+    const navigation = useNavigation();
+    const isSubmitting = navigation.state === "submitting";
+
     return (
-        <form className="form">
+        <Form className="form" method="POST">
             <h4 style={{ textAlign: "center", marginBottom: "2rem"}}>
                 Our Newsletter
             </h4>
@@ -14,7 +39,7 @@ const Newsletter = () => {
                     className="form-input" 
                     name="name" 
                     id="name" 
-                    defaultValue="Mike" 
+                    required 
                 />
             </div>
             {/* lastName */}
@@ -27,7 +52,7 @@ const Newsletter = () => {
                     className="form-input" 
                     name="lastName" 
                     id="lastName" 
-                    defaultValue="Dodson" 
+                    required 
                 />
             </div>
             {/* email */}
@@ -41,10 +66,18 @@ const Newsletter = () => {
                     name="email" 
                     id="email" 
                     defaultValue="test@test.com" 
+                    required
                 />
             </div>
-            <button type="submit" className="btn btn-block" style={{ marginTop: "0.5rem" }}>submit</button>
-        </form>
+            <button 
+                type="submit" 
+                className="btn btn-block" 
+                style={{ marginTop: "0.5rem" }}
+                disabled={isSubmitting}
+                >
+                {isSubmitting ? 'submitting' : 'submit'}
+            </button>
+        </Form>
     )
 }
 
